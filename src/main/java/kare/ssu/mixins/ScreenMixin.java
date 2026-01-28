@@ -1,5 +1,6 @@
 package kare.ssu.mixins;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import kare.ssu.client.RecipeQueryClient;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.inventory.Slot;
@@ -18,10 +19,10 @@ public abstract class ScreenMixin {
 
     @Inject(method = "keyPressed", at = @At("HEAD"))
     private void keyPressed(int i, int j, int k, CallbackInfoReturnable<Boolean> cir) {
-        if (RecipeQueryClient.queryKey.matches(i, j) && hoveredSlot != null) {
+        if (RecipeQueryClient.queryKey.isActiveAndMatches(InputConstants.getKey(i, j)) && hoveredSlot != null) {
             this.onClose();
             RecipeQueryClient.onRecipeQueryKeyPressed(hoveredSlot);
-        } else if (RecipeQueryClient.enchantedKey.matches(i, j) && hoveredSlot != null) {
+        } else if (RecipeQueryClient.enchantedKey.isActiveAndMatches(InputConstants.getKey(i, j)) && hoveredSlot != null) {
             this.onClose();
             RecipeQueryClient.onViewEnchanted(hoveredSlot);
         }
