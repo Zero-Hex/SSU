@@ -10,6 +10,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.Slot;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
@@ -25,6 +26,8 @@ public class RecipeQueryClient implements ClientModInitializer {
 
     public static KeyMapping queryKey;
     public static KeyMapping enchantedKey;
+
+    private static final KeyMapping.Category MOD_CATEGORY = KeyMapping.Category.create(ResourceLocation.fromNamespaceAndPath("ssu", "keys"));
 
     private static final Map<String, String> replacements = Map.ofEntries(
             Map.entry("Raw Porkchop", "Pork"),
@@ -143,14 +146,14 @@ public class RecipeQueryClient implements ClientModInitializer {
                 "key.recipequery.query", // The translation key of the keybinding's name
                 InputConstants.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
                 GLFW.GLFW_KEY_R, // The keycode of the key
-                "category.recipequery.keys" // The translation key of the keybinding's category.
+                MOD_CATEGORY // The keybinding's category.
         ));
 
         enchantedKey = KeyBindingHelper.registerKeyBinding(new KeyMapping(
                 "key.recipequery.viewenchanted", // The translation key of the keybinding's name
                 InputConstants.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
                 GLFW.GLFW_KEY_Y, // The keycode of the key
-                "category.recipequery.keys" // The translation key of the keybinding's category.
+                MOD_CATEGORY // The keybinding's category.
         ));
 
     }
