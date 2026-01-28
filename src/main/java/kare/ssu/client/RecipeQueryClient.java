@@ -27,7 +27,7 @@ public class RecipeQueryClient implements ClientModInitializer {
     public static KeyMapping queryKey;
     public static KeyMapping enchantedKey;
 
-    private static final KeyMapping.Category MOD_CATEGORY = KeyMapping.Category.create(ResourceLocation.fromNamespaceAndPath("ssu", "keys"));
+    private static final KeyMapping.Category MOD_CATEGORY = KeyMapping.Category.register(ResourceLocation.fromNamespaceAndPath("ssu", "keys"));
 
     private static final Map<String, String> replacements = Map.ofEntries(
             Map.entry("Raw Porkchop", "Pork"),
