@@ -1,6 +1,8 @@
 package kare.ssu.mixins;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import kare.ssu.client.RecipeQueryClient;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.inventory.Slot;
 import org.jetbrains.annotations.Nullable;
@@ -18,10 +20,11 @@ public abstract class ScreenMixin {
 
     @Inject(method = "keyPressed", at = @At("HEAD"))
     private void keyPressed(int i, int j, int k, CallbackInfoReturnable<Boolean> cir) {
-        if (RecipeQueryClient.queryKey.matches(i, j) && hoveredSlot != null) {
+        InputConstants.Key pressedKey = InputConstants.Type.KEYSYM.getOrCreate(i);
+        if (KeyBindingHelper.getBoundKeyOf(RecipeQueryClient.queryKey).equals(pressedKey) && hoveredSlot != null) {
             this.onClose();
             RecipeQueryClient.onRecipeQueryKeyPressed(hoveredSlot);
-        } else if (RecipeQueryClient.enchantedKey.matches(i, j) && hoveredSlot != null) {
+        } else if (KeyBindingHelper.getBoundKeyOf(RecipeQueryClient.enchantedKey).equals(pressedKey) && hoveredSlot != null) {
             this.onClose();
             RecipeQueryClient.onViewEnchanted(hoveredSlot);
         }
