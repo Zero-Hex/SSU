@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import kare.ssu.client.RecipeQueryClient;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.input.KeyInput;
 import net.minecraft.world.inventory.Slot;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,8 +20,8 @@ public abstract class ScreenMixin {
     @Shadow public abstract void onClose();
 
     @Inject(method = "keyPressed", at = @At("HEAD"))
-    private void keyPressed(int i, int j, int k, CallbackInfoReturnable<Boolean> cir) {
-        InputConstants.Key pressedKey = InputConstants.Type.KEYSYM.getOrCreate(i);
+    private void keyPressed(KeyInput keyInput, CallbackInfoReturnable<Boolean> cir) {
+        InputConstants.Key pressedKey = InputConstants.Type.KEYSYM.getOrCreate(keyInput.key());
         if (KeyBindingHelper.getBoundKeyOf(RecipeQueryClient.queryKey).equals(pressedKey) && hoveredSlot != null) {
             this.onClose();
             RecipeQueryClient.onRecipeQueryKeyPressed(hoveredSlot);
